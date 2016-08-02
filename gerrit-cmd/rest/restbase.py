@@ -162,7 +162,7 @@ class GerritRestAPI(Singleton):
         response = requests.post(self.make_url(endpoint), **kwargs)
         return _decode_response(response)
 
-    def delete(self, endpoint, **kwargs):
+    def delete(self, endpoint ,**kwargs):
         """ Send HTTP DELETE to the endpoint.
 
         :arg str endpoint: The endpoint to send to.

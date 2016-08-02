@@ -22,3 +22,5 @@ Copyright
 ---------
 
 Some codes are based on the project https://github.com/sonyxperiadev/pygerrit
+
+Some codes are referenced
