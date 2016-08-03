@@ -4,6 +4,29 @@ gerrit-cmd
 This project is a cmd tool for gerrit.
 It's being developing now and can't wort yet.
 
+Configuration
+=============
+All the configuration are configured in ~/.grtrc
+
+Configuration options
+---------------------
+url：The url of you gerrit server,this must be configured
+
+username:The user name of your gerrit,this is not necesssary if you don't
+want to be authorized by gerrit server.
+
+password:The HTTP password of your gerrit,this is not necessary if you don't
+want to be authorized by gerrit server.
+
+example
+-------
+All the options should be configured in "grt" section
+::
+
+    [grt]
+    url=review.openstack.org
+    username=username
+    password=password
 
 Copyright and License
 ====================
