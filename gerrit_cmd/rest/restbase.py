@@ -21,13 +21,37 @@
 # THE SOFTWARE.
 
 """ Interface to the Gerrit REST API. """
-
+import sys
 import json
 import logging
 import requests
+import ConfigParser
+from requests.auth import HTTPDigestAuth
 
 GERRIT_MAGIC_JSON_PREFIX = ")]}\'\n"
 GERRIT_AUTH_SUFFIX = "/a"
+
+def check_authentication(response):
+    content = response.content.strip()
+    http_error_msg = ''
+    if response.status_code == 403:
+
+        if content == u'Authentication required':
+            http_error_msg = u'You need to be authrised to do this.'
+        elif content == u'Forbidden' or content == u'sdfsd':
+            http_error_msg = u'Your password or username is wrong.'
+
+    elif response.status_code == 401:
+        http_error_msg = u'This is caused by wrong password or username ,or you are not authorzed'
+
+
+
+    if http_error_msg:
+        print 'From server:%s' % content
+        print http_error_msg
+        exit(0)
+
+
 
 
 def _decode_response(response):
@@ -43,6 +67,7 @@ def _decode_response(response):
     """
     content = response.content.strip()
     logging.debug(content[:512])
+    check_authentication(response)
     response.raise_for_status()
     if content.startswith(GERRIT_MAGIC_JSON_PREFIX):
         content = content[len(GERRIT_MAGIC_JSON_PREFIX):]
@@ -73,7 +98,28 @@ class GerritRestAPI(Singleton):
 
     """
 
+    def read_config(self):
+
+
     def __init__(self, url, auth=None, verify=True):
+
+        cf= ConfigParser.ConfigParser()
+        cf.read("~/.grtrc")
+        if cf.has_option("grt","url") and cf.get("grt","url")!=u'':
+                cf_url = cf.get("grt","url")
+        else:
+            sys.stderr.write("The url of server hasn't been configured,please configure \"url\" in ~/.grtrc")
+
+
+        if cf.has_option("grt","username") and cf.has_option("grt","password"):
+            if cf.get("grt", "username") != u'' and cf.get("grt","password")!=u'':
+                cf_username = cf.get("grt","username")
+                cf_password = cf.get("grt", "password")
+                auth = HTTPDigestAuth(cf_username,cf_password)
+
+
+        self.url=cf_url
+
         headers = {'Accept': 'application/json',
                    'Accept-Encoding': 'gzip'}
         self.kwargs = {'auth': auth,
@@ -105,6 +151,7 @@ class GerritRestAPI(Singleton):
             The full url.
 
         """
+
         endpoint = endpoint.lstrip('/')
         return self.url + endpoint
 
@@ -160,6 +207,7 @@ class GerritRestAPI(Singleton):
             kwargs["headers"].update(
                 {"Content-Type": "application/json;charset=UTF-8"})
         response = requests.post(self.make_url(endpoint), **kwargs)
+
         return _decode_response(response)
 
     def delete(self, endpoint ,**kwargs):

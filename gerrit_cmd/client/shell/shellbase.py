@@ -1,22 +1,35 @@
 import argparse
 import importlib
 
+#map category to it's category parent
+mapper = {'change'       :    'changes',
+          'change_edit'  :    'changes'
+         }
 
-
+def map(category):
+    result = mapper.get(category)
+    if result is None:
+         print '%s not find ' %category
+         raise Exception
+    else:
+        return result
 
 def run(parser):
     config = parser.__dict__
-    modstr = "gerrit-cmd.client.actions.%s.%s" % config.pop("category"),config.pop("action")
+    category=config.pop("category")
+    modstr = "gerrit-cmd.client.actions.%s.%s" % (map(category),category)
     mod = importlib.import_module(modstr)
-    func = getattr(mod,"run")
+    func = getattr(mod,"%s_run" % config.pop('action'))
+
     return func(config)
 
 def main():
     rootparser = argparse.ArgumentParser(description='A client for gerrit')
-
-
     subparsers = rootparser.add_subparsers(title="categories", dest="category")
 
+#add paraser arguments in respective parsers, just like a pipeline
+    accessparaser(subparsers)
+    accountsparaser(subparsers)
     changeparsers(subparsers)
 
     parser = rootparser.parse_args()
@@ -24,7 +37,9 @@ def main():
     try:
         run(parser)
     except Exception as e:
+        print e
         raise e
+
     else:
         return 0
 
@@ -49,6 +64,17 @@ def changeparsers(subparsers):
                                       help='A legacy numerical \'ID\' such as 15183, '
                                            'or a newer style Change-Id that was scraped '
                                            'out of the commit message')
+
+    ##
+
+def accessparaser(subparsers):
+    #do access related paraser here
+    pass
+
+def accountsparaser(subparsers):
+    # do account related paraser here
+    pass
+
 
 
 
