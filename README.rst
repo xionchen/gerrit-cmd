@@ -1,4 +1,4 @@
-gerrit-cmd
+Gerrit-cmd
 ==========
 
 This project is a cmd tool for gerrit.
