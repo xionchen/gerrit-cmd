@@ -52,7 +52,7 @@ def changeparsers(subparsers):
                                       choices=['open', 'reviewed', 'closed', 'merged', 'abandoned'],
                                       dest='status', help='status of the change')
 
-    change_query_parsers.add_argument('-o', '--owner', dest='owner',
+    change_query_parsers.add_argument('-O', '--owner', dest='owner',
                                       help='Changes originally submitted by \'USER\'.  '
                                            'The special case of owner:self will find '
                                            'changes owned by the caller.')
@@ -62,8 +62,20 @@ def changeparsers(subparsers):
                                            'or a newer style Change-Id that was scraped '
                                            'out of the commit message')
 
+    change_query_parsers.add_argument('-p', '--project', dest='projects',
+                                      help='query changes about this project.(or projects starting with this argument)')
+
     change_query_parsers.add_argument('-n', dest='n', default=25,
                                       help='How many changes do you want.Default 25')
+
+    change_query_parsers.add_argument('--print-message', dest='print-message', action='store_true',
+                                      help='print message')
+    '''
+    change_query_parsers.add_argument('-o', dest='o',
+                                      help='Additional fields can be obtained by adding o parameters, each option '
+                                           'requires more database lookups and slows down the query response time '
+                                           'to the client so they are generally disabled by default.')
+    '''
 
     # ##change create
     change_create_parsers = change_subparsers.add_parser("create")
@@ -72,6 +84,25 @@ def changeparsers(subparsers):
     change_create_parsers.add_argument('-b', '--branch', dest='branch')
     change_create_parsers.add_argument('-t', '--topic', dest='topic')
     change_create_parsers.add_argument('--status', dest='status')
+
+    # ##change detail
+    change_id_help = 'Identifier that uniquely identifies one change.\n' \
+                     'This can be:\n' \
+                     '''an ID of the change in the format "'<project>~<branch>~<Change-Id>'",''' \
+                     ' where for the branch the refs/heads/ prefix can be omitted' \
+                     ' ("myProject~master~I8473b95934b5732ac55d26311a706c9c2bde9940")\n' \
+                     'a Change-Id if it uniquely identifies one change ("I8473b95934b5732ac55d26311a706c9c2bde9940")\n' \
+                     'a legacy numeric change ID ("4247")\n'
+
+    change_create_parsers = change_subparsers.add_parser("detail")
+    change_create_parsers.add_argument('-i', '--id', dest='id', help=change_id_help)
+
+    # ##change message
+    change_message_parsers = change_subparsers.add_parser("message")
+    change_message_parsers.add_argument('-n', dest='n', default=25,
+                                      help='How many changes do you want.Default 25')
+
+
 
 
 def accessparaser(subparsers):

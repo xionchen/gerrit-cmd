@@ -5,21 +5,60 @@ import json
 endpoint_base = '/changes/'
 
 
-def print_table(result):
-    t = prettytable.PrettyTable(result.keys())
-    attrs = []
-    for atr in result.keys():
-        attrs.append(result.get(atr))
+def print_messages(result):
+    resultlist = []
+    # ensure result is a list
+    if type(result) is dict:
+        resultlist.append(result)
+    else:
+        resultlist = result
+    messages=map(lambda x:trans_changes_to_messages(x), resultlist)
 
-    t.add_row(attrs)
+    result=[]
+    for x in messages:
+        for a in x:
+            result.append(a)
+    for x in result:
+        print x
+    print_table(result)
+
+
+def trans_changes_to_messages(change):
+
+    messages = change['messages']
+    id = change['id']
+    change_id = change['change_id']
+
+    for x in messages:
+        x['id'] = id
+        x['change_id'] = change_id
+
+    return messages
+
+
+def print_table(result):
+
+    t = prettytable.PrettyTable(result[0].keys())
+
+    for x in result:
+        attrs = []
+        for atr in result[0].keys():
+            attrs.append(x.get(atr))
+        if len(attrs) != 6:
+            continue
+        t.add_row(attrs)
     print t
 
 
 def query_run(config):
-    rest = restbase.GerritRestAPI()
+
     query_list = []
     n = config.pop('n')
-    querystr = '?n=%d' % n
+    querystr = '?n=%s' % n
+    pm = config.pop('print-message')
+    if pm is True:
+        optionstr = '&o=%s' % 'MESSAGES'
+
     queryargs = ''
 
     for x in config.keys():
@@ -29,9 +68,13 @@ def query_run(config):
     if len(query_list) != 0:
         queryargs = '&q='+'%20'.join(query_list)
 
-    querystr = querystr+queryargs
+    querystr = querystr + queryargs+optionstr
+
     result = restbase.GerritRestAPI().get(endpoint_base+querystr)
 
+    if pm is True:
+        print_messages(result)
+        return
     # this should be writed as a function but the situation is special.
     t = prettytable.PrettyTable(result[0].keys())
 
@@ -60,7 +103,7 @@ def create_run(config):
     if config.get('status') is None:
         config['status'] = raw_input('please enter status:\n')
 
-    print 'creating'
+    print '\ncreating>>'
 
     '''temp test code
     create_dic={
@@ -73,4 +116,19 @@ def create_run(config):
     '''
     sentjson = json.JSONEncoder().encode(config)
     result = restbase.GerritRestAPI().post(endpoint_base, data=sentjson)
+    resultlist=[]
+    resultlist.append(result)
+    print_table(resultlist)
+
+
+def detail_run(config):
+    if config.get('id') is None:
+        config['project'] = raw_input('No id,please enter change id:\n')
+
+    detailstr = config.pop('id')+'/detail'
+    result = restbase.GerritRestAPI().get(endpoint_base+detailstr)
+    import pdb
+    pdb.set_trace()
     print_table(result)
+
+
