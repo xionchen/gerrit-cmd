@@ -36,8 +36,9 @@ In actions module, the specific of actions are define with function actionname_r
 will use restbase module.
 
 To extend the code:
-1. add a xxxxparsers reference to changeparsers in client.shell.shell.py
-2. add actions in action module
+
+- add a xxxxparsers reference to changeparsers in client.shell.shell.py
+- add actions in action module
 
 Copyright and License
 =====================
