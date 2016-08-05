@@ -4,14 +4,13 @@ import  json
 endpoint_base='/changes/'
 
 def print_table(result):
-
     t = prettytable.PrettyTable(result.keys())
     attrs = []
-    for atr in result[0].keys():
+    for atr in result.keys():
         attrs.append(result.get(atr))
 
     t.add_row(attrs)
-    t.add_column()
+    print t
 
 
 
