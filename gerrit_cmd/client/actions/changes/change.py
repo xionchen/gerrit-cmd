@@ -18,8 +18,7 @@ def print_messages(result):
     for x in messages:
         for a in x:
             result.append(a)
-    for x in result:
-        print x
+   
     print_table(result)
 
 
