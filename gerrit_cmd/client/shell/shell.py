@@ -76,7 +76,7 @@ def changeparsers(subparsers):
     change_create_parsers.add_argument('-s','--subject',dest='subject')
     change_create_parsers.add_argument('-b','--branch',dest='branch')
     change_create_parsers.add_argument('-t','--topic',dest='topic')
-    change_create_parsers.add_argument('-s','--status',dest='status')
+    change_create_parsers.add_argument('--status',dest='status')
 
 
 def accessparaser(subparsers):
