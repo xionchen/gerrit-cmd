@@ -17,7 +17,8 @@ def map(category):
 def run(parser):
     config = parser.__dict__
     category=config.pop("category")
-    modstr = "gerrit-cmd.client.actions.%s.%s" % (map(category),category)
+    modstr = "gerrit_cmd.client.actions.%s.%s" % (map(category),category)
+    #print modstr
     mod = importlib.import_module(modstr)
     func = getattr(mod,"%s_run" % config.pop('action'))
 
@@ -27,14 +28,15 @@ def main():
     rootparser = argparse.ArgumentParser(description='A client for gerrit')
     subparsers = rootparser.add_subparsers(title="categories", dest="category")
 
-#add paraser arguments in respective parsers, just like a pipeline
+# Add paraser arguments in respective parsers, just like a pipeline. one should just modify the function they care
+# and make sure action in gerrit_cmd.actions are available
     accessparaser(subparsers)
     accountsparaser(subparsers)
     changeparsers(subparsers)
 
     parser = rootparser.parse_args()
-
-    try:
+    run(parser)
+'''     try:
         run(parser)
     except Exception as e:
         print e
@@ -42,7 +44,7 @@ def main():
 
     else:
         return 0
-
+'''
 def changeparsers(subparsers):
     ###change categories
     changeparsers = subparsers.add_parser("change")
@@ -65,7 +67,17 @@ def changeparsers(subparsers):
                                            'or a newer style Change-Id that was scraped '
                                            'out of the commit message')
 
-    ##
+    change_query_parsers.add_argument('-n', dest='n',default=25,
+                                      help='How many changes do you want.Default 25')
+
+    ##change create
+    change_create_parsers = change_subparsers.add_parser("create")
+    change_create_parsers.add_argument('-p','--project',dest='project')
+    change_create_parsers.add_argument('-s','--subject',dest='subject')
+    change_create_parsers.add_argument('-b','--branch',dest='branch')
+    change_create_parsers.add_argument('-t','--topic',dest='topic')
+    change_create_parsers.add_argument('-s','--status',dest='status')
+
 
 def accessparaser(subparsers):
     #do access related paraser here
