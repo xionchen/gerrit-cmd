@@ -32,33 +32,28 @@ from requests.auth import HTTPDigestAuth
 GERRIT_MAGIC_JSON_PREFIX = ")]}\'\n"
 GERRIT_AUTH_SUFFIX = "/a"
 
+
 def check_authentication(response):
     content = response.content.strip()
     http_error_msg = ''
-    if response.status_code == 403 or response.status_code==400:
+    if response.status_code == 403 or response.status_code == 400:
 
-        if content == u'Authentication required' or content==u'Not Signed In':
+        if content == u'Authentication required' or content == u'Not Signed In':
             http_error_msg = u'You need to be authrised to do this.Please set your username and password' \
                              u' in ~/.grtrc.'
         elif content == u'Forbidden' or content == u'sdfsd':
             http_error_msg = u'Your password or username is wrong.'
-
-
     elif response.status_code == 401:
         http_error_msg = u'This is caused by wrong password or username ,or you are not authorzed'
-
     elif 400 <= response.status_code < 500:
-        http_error_msg='other failure:%s'%response.status_code
+        http_error_msg = 'other failure:%s' % response.status_code
     elif 500 <= response.status_code < 600:
         http_error_msg = 'other failure:%s' % response.status_code
-
 
     if http_error_msg:
         print 'From server:%s' % content
         print http_error_msg
         exit(0)
-
-
 
 
 def _decode_response(response):
@@ -84,12 +79,14 @@ def _decode_response(response):
         logging.error('Invalid json content: %s' % content)
         raise
 
+
 class Singleton(object):
     def __new__(cls, *args, **kw):
         if not hasattr(cls, '_instance'):
             orig = super(Singleton, cls)
             cls._instance = orig.__new__(cls, *args, **kw)
         return cls._instance
+
 
 class GerritRestAPI(Singleton):
 
@@ -107,25 +104,21 @@ class GerritRestAPI(Singleton):
 
     def __init__(self, url=None, auth=None, verify=True):
 
-        cf= ConfigParser.ConfigParser()
+        cf = ConfigParser.ConfigParser()
         home = os.environ['HOME']
         cf.read(home+"/.grtrc")
 
-        if cf.has_option("grt","url") and cf.get("grt","url")!=u'':
-            cf_url = cf.get("grt","url")
+        if cf.has_option("grt", "url") and cf.get("grt", "url") != u'':
+            cf_url = cf.get("grt", "url")
         else:
             sys.stderr.write("The url of server hasn't been configured,please configure \"url\" in ~/.grtrc")
             exit(0)
 
-        if cf.has_option("grt","username") and cf.has_option("grt","password"):
-            if cf.get("grt", "username") != u'' and cf.get("grt","password")!=u'':
-                cf_username = cf.get("grt","username")
+        if cf.has_option("grt", "username") and cf.has_option("grt", "password"):
+            if cf.get("grt", "username") != u'' and cf.get("grt", "password") != u'':
+                cf_username = cf.get("grt", "username")
                 cf_password = cf.get("grt", "password")
-                auth = HTTPDigestAuth(cf_username,cf_password)
-
-
-
-
+                auth = HTTPDigestAuth(cf_username, cf_password)
 
         headers = {'Accept': 'application/json',
                    'Accept-Encoding': 'gzip'}
@@ -217,7 +210,7 @@ class GerritRestAPI(Singleton):
 
         return _decode_response(response)
 
-    def delete(self, endpoint ,**kwargs):
+    def delete(self, endpoint, **kwargs):
         """ Send HTTP DELETE to the endpoint.
 
         :arg str endpoint: The endpoint to send to.

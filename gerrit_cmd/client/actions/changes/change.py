@@ -1,7 +1,9 @@
 import gerrit_cmd.rest.restbase as restbase
 import prettytable
-import  json
-endpoint_base='/changes/'
+import json
+
+endpoint_base = '/changes/'
+
 
 def print_table(result):
     t = prettytable.PrettyTable(result.keys())
@@ -13,32 +15,31 @@ def print_table(result):
     print t
 
 
-
 def query_run(config):
-    rest=restbase.GerritRestAPI()
+    rest = restbase.GerritRestAPI()
     query_list = []
-    n=config.pop('n')
-    querystr='?n=%d'%n
-    queryargs=''
+    n = config.pop('n')
+    querystr = '?n=%d' % n
+    queryargs = ''
 
     for x in config.keys():
         if config.get(x) is not None:
-            query_list.append('%s:%s'%(x,config.get(x)))
+            query_list.append('%s:%s' % (x, config.get(x)))
 
-    if len(query_list)!=0:
-        queryargs='&q='+'%20'.join(query_list)
+    if len(query_list) != 0:
+        queryargs = '&q='+'%20'.join(query_list)
 
-    querystr=querystr+queryargs
-    result=restbase.GerritRestAPI().get(endpoint_base+querystr)
+    querystr = querystr+queryargs
+    result = restbase.GerritRestAPI().get(endpoint_base+querystr)
 
-    #this should be writed as a function but the situation is special.
+    # this should be writed as a function but the situation is special.
     t = prettytable.PrettyTable(result[0].keys())
 
     for x in result:
         attrs = []
-        if x.get('topic') == None:
+        if x.get('topic') is None:
             x[u'topic'] = '\'NONE\''
-        if x.get('_more_changes') != None:
+        if x.get('_more_changes') is not None:
             x.pop('_more_changes')
         for atr in result[0].keys():
             attrs.append(x.get(atr))
@@ -70,6 +71,6 @@ def create_run(config):
     "status" : "OPEN"
   }
     '''
-    sentjson= json.JSONEncoder().encode(config)
-    result = restbase.GerritRestAPI().post(endpoint_base,data=sentjson)
+    sentjson = json.JSONEncoder().encode(config)
+    result = restbase.GerritRestAPI().post(endpoint_base, data=sentjson)
     print_table(result)
