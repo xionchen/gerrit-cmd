@@ -12,7 +12,7 @@ Configuration options
 ---------------------
 url：The url of you gerrit server,this must be configured
 
-username:The user name of your gerrit,this is not necessary if you don't
+username:The user name of your gerrit,this is not necesssary if you don't
 want to be authorized by gerrit server.
 
 password:The HTTP password of your gerrit,this is not necessary if you don't
