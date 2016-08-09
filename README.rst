@@ -19,10 +19,15 @@ On windowns:
 -----------
 1. install pip
 2. In git bash: git clone  https://github.com/xionchen/gerrit-cmd.git
-3. In cmd:<br/>
-a. enter the gerrit-cmd path</br>
-b. run pip install .
+3. In cmd:
+| a. enter the gerrit-cmd path
+| b. run pip install .
 4. edit your configuration file
+
+**note**:cmd in windows do not support utf-8,so if there may be some messy code,
+pipeline the result to a file is a way to deal with this problem.
+
+
 
 Configuration
 =============
@@ -39,8 +44,8 @@ want to be authorized by gerrit server.
 
 example
 -------
-There is an example configure file: /grtrc_example
-All the options should be configured in "grt" section
+| There is an example configure file: /grtrc_example
+| All the options should be configured in "grt" section
 
 ::
 
