@@ -23,8 +23,9 @@ def print_messages(result):
     for x in result:
         for a in x:
             messages.append(a)
-    messages = filter(lambda x: x['author']['username'] != 'jenkins', messages)
-    messages = filter(lambda x: not re.match('Uploaded patch set [0-9]+.',x['message']),messages)
+
+    messages = filter(lambda x: 'author' in x.keys() and x['author']['username'] != 'jenkins', messages)
+    messages = filter(lambda x: not re.match('Uploaded patch set [0-9]+.', x['message']), messages)
     messages = filter(lambda x: not re.match('Patch Set [0-9]+:', x['message']), messages)
     print_table(messages)
 
