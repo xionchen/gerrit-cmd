@@ -20,8 +20,8 @@ On windowns:
 1. install pip
 2. In git bash: git clone  https://github.com/xionchen/gerrit-cmd.git
 3. In cmd:
-| a. enter the gerrit-cmd path
-| b. run pip install .
+  a. enter the gerrit-cmd path
+  b. run pip install .
 4. edit your configuration file
 
 **note**:cmd in windows do not support utf-8,so if there may be some messy code,
@@ -36,10 +36,10 @@ All the configuration are configured in ~/.grtrc
 Configuration options
 ---------------------
 
-**url**：The url of you gerrit server,this must be configured<br>
-**username**:The user name of your gerrit,this is not necessary if you don't
-want to be authorized by gerrit server.<br>
-**password**:The HTTP password of your gerrit,this is not necessary if you don't
+| **url**：The url of you gerrit server,this must be configured
+| **username**:The user name of your gerrit,this is not necessary if you don't
+want to be authorized by gerrit server.
+| **password**:The HTTP password of your gerrit,this is not necessary if you don't
 want to be authorized by gerrit server.
 
 example
