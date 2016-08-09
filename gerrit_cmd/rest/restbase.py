@@ -110,7 +110,7 @@ class GerritRestAPI(Singleton):
             home = os.environ['HOMEPATH']
         else:
             home = os.environ['HOME']
-        cf.read(home+"/.grtrc")
+        cf.read(home + "/.grtrc")
 
         if cf.has_option("grt", "url") and cf.get("grt", "url") != u'':
             cf_url = cf.get("grt", "url")

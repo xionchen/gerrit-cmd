@@ -8,7 +8,8 @@ Installation
 ============
 
 On linux:
---------
+---------
+
 1. install pip(This can be different acording to what your linux is)
 2. $ git clone https://github.com/xionchen/gerrit-cmd.git
 3. $ cd gerrit-cmd
@@ -16,7 +17,8 @@ On linux:
 5. edit your configuration file
 
 On windowns:
------------
+------------
+
 1. install pip
 2. In git bash: git clone  https://github.com/xionchen/gerrit-cmd.git
 3. In cmd:
@@ -37,12 +39,10 @@ Configuration options
 ---------------------
 
 | **url**：The url of you gerrit server,this must be configured
-| **username**:The user name of your gerrit,this is not necessary if you don't
-want to be authorized by gerrit server.
-| **password**:The HTTP password of your gerrit,this is not necessary if you don't
-want to be authorized by gerrit server.
+| **username**:The user name of your gerrit,this is not necessary if you don't want to be authorized by gerrit server.
+| **password**:The HTTP password of your gerrit,this is not necessary if you don't want to be authorized by gerrit server.
 
-example
+Example
 -------
 | There is an example configure file: /grtrc_example
 | All the options should be configured in "grt" section
@@ -56,6 +56,10 @@ example
 
 Extend the code
 ===============
+
+How to extend
+-------------
+
 There are 3 layers of this project: shell, actions, restbase.
 shell decide how to deal with argument and pass the arguments to one module of actions.
 In actions module, the specific of actions are defined with function actionname_run() and

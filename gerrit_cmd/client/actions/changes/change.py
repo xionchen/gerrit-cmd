@@ -12,9 +12,9 @@ def print_messages(result):
         resultlist.append(result)
     else:
         resultlist = result
-    messages=map(lambda x:trans_changes_to_messages(x), resultlist)
+    messages = map(lambda x: trans_changes_to_messages(x), resultlist)
 
-    result=[]
+    result = []
     for x in messages:
         for a in x:
             result.append(a)
@@ -66,11 +66,11 @@ def query_run(config):
             query_list.append('%s:%s' % (x, config.get(x)))
 
     if len(query_list) != 0:
-        queryargs = '&q='+'%20'.join(query_list)
+        queryargs = '&q=' + '%20'.join(query_list)
 
-    querystr = querystr + queryargs+optionstr
+    querystr = querystr + queryargs + optionstr
 
-    result = restbase.GerritRestAPI().get(endpoint_base+querystr)
+    result = restbase.GerritRestAPI().get(endpoint_base + querystr)
 
     if pm is True:
         print_messages(result)
@@ -116,7 +116,7 @@ def create_run(config):
     '''
     sentjson = json.JSONEncoder().encode(config)
     result = restbase.GerritRestAPI().post(endpoint_base, data=sentjson)
-    resultlist=[]
+    resultlist = []
     resultlist.append(result)
     print_table(resultlist)
 
@@ -125,10 +125,8 @@ def detail_run(config):
     if config.get('id') is None:
         config['project'] = raw_input('No id,please enter change id:\n')
 
-    detailstr = config.pop('id')+'/detail'
-    result = restbase.GerritRestAPI().get(endpoint_base+detailstr)
+    detailstr = config.pop('id') + '/detail'
+    result = restbase.GerritRestAPI().get(endpoint_base + detailstr)
     import pdb
     pdb.set_trace()
     print_table(result)
-
-

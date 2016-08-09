@@ -2,7 +2,7 @@ import argparse
 import importlib
 
 # map category to it's category parent
-mapper = {'change':      'changes',
+mapper = {'change': 'changes',
           'change_edit': 'changes'}
 
 
@@ -91,7 +91,8 @@ def changeparsers(subparsers):
                      '''an ID of the change in the format "'<project>~<branch>~<Change-Id>'",''' \
                      ' where for the branch the refs/heads/ prefix can be omitted' \
                      ' ("myProject~master~I8473b95934b5732ac55d26311a706c9c2bde9940")\n' \
-                     'a Change-Id if it uniquely identifies one change ("I8473b95934b5732ac55d26311a706c9c2bde9940")\n' \
+                     'a Change-Id if it uniquely identifies one change ' \
+                     '("I8473b95934b5732ac55d26311a706c9c2bde9940")\n' \
                      'a legacy numeric change ID ("4247")\n'
 
     change_create_parsers = change_subparsers.add_parser("detail")
@@ -99,10 +100,7 @@ def changeparsers(subparsers):
 
     # ##change message
     change_message_parsers = change_subparsers.add_parser("message")
-    change_message_parsers.add_argument('-n', dest='n', default=25,
-                                      help='How many changes do you want.Default 25')
-
-
+    change_message_parsers.add_argument('-n', dest='n', default=25, help='How many changes do you want.Default 25')
 
 
 def accessparaser(subparsers):
