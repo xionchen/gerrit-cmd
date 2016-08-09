@@ -70,6 +70,10 @@ def changeparsers(subparsers):
 
     change_query_parsers.add_argument('--print-message', dest='print-message', action='store_true',
                                       help='print message')
+
+
+
+
     '''
     change_query_parsers.add_argument('-o', dest='o',
                                       help='Additional fields can be obtained by adding o parameters, each option '

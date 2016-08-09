@@ -1,6 +1,8 @@
 import gerrit_cmd.rest.restbase as restbase
 import prettytable
 import json
+import  re
+
 
 endpoint_base = '/changes/'
 
@@ -12,24 +14,29 @@ def print_messages(result):
         resultlist.append(result)
     else:
         resultlist = result
-    messages = map(lambda x: trans_changes_to_messages(x), resultlist)
 
-    result = []
-    for x in messages:
+    # 'changes + message1 message2'--->[message1,message2]
+    result = map(lambda x: trans_changes_to_messages(x), resultlist)
+
+    messages = []
+    # openlist in list
+    for x in result:
         for a in x:
-            result.append(a)
-
-    print_table(result)
+            messages.append(a)
+    messages = filter(lambda x: x['author']['username'] != 'jenkins', messages)
+    messages = filter(lambda x: not re.match('Uploaded patch set [0-9]+.',x['message']),messages)
+    messages = filter(lambda x: not re.match('Patch Set [0-9]+:', x['message']), messages)
+    print_table(messages)
 
 
 def trans_changes_to_messages(change):
 
     messages = change['messages']
-    id = change['id']
+    # id = change['id'] this is redundancy
     change_id = change['change_id']
 
     for x in messages:
-        x['id'] = id
+        # x['id'] = id this is redundancy
         x['change_id'] = change_id
 
     return messages
@@ -57,7 +64,7 @@ def query_run(config):
     pm = config.pop('print-message')
     optionstr = ''
     if pm is True:
-        optionstr = '&o=%s' % 'MESSAGES'
+        optionstr = '&o=MESSAGES&o=DETAILED_ACCOUNTS'
 
     queryargs = ''
 
