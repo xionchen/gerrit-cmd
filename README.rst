@@ -7,8 +7,22 @@ It's being developing now and can't wort yet.
 Installation
 ============
 
-1.
+On linux:
+--------
+1. install pip(This can be different acording to what your linux is)
+2. $ git clone https://github.com/xionchen/gerrit-cmd.git
+3. $ cd gerrit-cmd
+4. $ pip install .
+5. edit your configuration file
 
+On windowns:
+-----------
+1. install pip
+2. In git bash: git clone  https://github.com/xionchen/gerrit-cmd.git
+3. In cmd:<br/>
+a. enter the gerrit-cmd path</br>
+b. run pip install .
+4. edit your configuration file
 
 Configuration
 =============
@@ -16,17 +30,18 @@ All the configuration are configured in ~/.grtrc
 
 Configuration options
 ---------------------
-url：The url of you gerrit server,this must be configured
 
-username:The user name of your gerrit,this is not necessary if you don't
-want to be authorized by gerrit server.
-
-password:The HTTP password of your gerrit,this is not necessary if you don't
+**url**：The url of you gerrit server,this must be configured<br>
+**username**:The user name of your gerrit,this is not necessary if you don't
+want to be authorized by gerrit server.<br>
+**password**:The HTTP password of your gerrit,this is not necessary if you don't
 want to be authorized by gerrit server.
 
 example
 -------
+There is an example configure file: /grtrc_example
 All the options should be configured in "grt" section
+
 ::
 
     [grt]
