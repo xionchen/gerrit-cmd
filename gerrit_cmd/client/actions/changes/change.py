@@ -55,6 +55,7 @@ def query_run(config):
     n = config.pop('n')
     querystr = '?n=%s' % n
     pm = config.pop('print-message')
+    optionstr = ''
     if pm is True:
         optionstr = '&o=%s' % 'MESSAGES'
 

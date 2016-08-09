@@ -27,6 +27,7 @@ import json
 import logging
 import requests
 import ConfigParser
+import platform
 from requests.auth import HTTPDigestAuth
 
 GERRIT_MAGIC_JSON_PREFIX = ")]}\'\n"
@@ -105,7 +106,10 @@ class GerritRestAPI(Singleton):
     def __init__(self, url=None, auth=None, verify=True):
 
         cf = ConfigParser.ConfigParser()
-        home = os.environ['HOME']
+        if platform.system() == 'Windows':
+            home = os.environ['HOMEPATH']
+        else:
+            home = os.environ['HOME']
         cf.read(home+"/.grtrc")
 
         if cf.has_option("grt", "url") and cf.get("grt", "url") != u'':

@@ -4,6 +4,12 @@ Gerrit-cmd
 This project is a cmd tool for gerrit.
 It's being developing now and can't wort yet.
 
+Installation
+============
+
+1.
+
+
 Configuration
 =============
 All the configuration are configured in ~/.grtrc
@@ -32,13 +38,19 @@ Extend the code
 ===============
 There are 3 layers of this project: shell, actions, restbase.
 shell decide how to deal with argument and pass the arguments to one module of actions.
-In actions module, the specific of actions are define with function actionname_run() and
+In actions module, the specific of actions are defined with function actionname_run() and
 will use restbase module.
 
 To extend the code:
 
 - add a xxxxparsers reference to changeparsers in client.shell.shell.py
 - add actions in action module
+
+Rest Api
+--------
+
+There are rest api which you can reference to:
+https://review.openstack.org/Documentation/rest-api.html
 
 Copyright and License
 =====================
@@ -50,7 +62,7 @@ Copyright 2011 Sony Ericsson Mobile Communications. All rights reserved.
 
 Copyright 2012 Sony Mobile Communications. All rights reserved.
 
-Licensed under The MIT License.  Please refer to the `LICENSE`_ file for full
+Licensed under The MIT License.  Please refer to the `LICENSE` file for full
 license details.
 
 Copyright
