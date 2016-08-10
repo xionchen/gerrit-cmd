@@ -82,10 +82,6 @@ Copyright and License
 License
 -------
 
-Copyright 2011 Sony Ericsson Mobile Communications. All rights reserved.
-
-Copyright 2012 Sony Mobile Communications. All rights reserved.
-
 Licensed under The MIT License.  Please refer to the `LICENSE` file for full
 license details.
 
