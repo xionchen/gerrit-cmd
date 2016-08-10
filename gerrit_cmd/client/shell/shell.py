@@ -3,7 +3,9 @@ import importlib
 
 # map category to it's category parent
 mapper = {'change': 'changes',
-          'change_edit': 'changes'}
+          'change_edit': 'changes'
+
+          }
 
 
 def map(category):
@@ -115,6 +117,11 @@ def accessparaser(subparsers):
 def accountsparaser(subparsers):
     # do account related paraser here
     pass
+
+def configparaser(subparsers):
+    # ###change categories
+    configparaser = subparsers.add_parser("config")
+    config_subparsers = changeparsers.add_subparsers(title="actions", dest="action")
 
 
 if __name__ == "__main__":

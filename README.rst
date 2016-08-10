@@ -14,17 +14,18 @@ On linux:
 2. $ git clone https://github.com/xionchen/gerrit-cmd.git
 3. $ cd gerrit-cmd
 4. $ pip install .
-5. edit your configuration file
+5. edit your configuration file reference to "Configuration"
 
 On windowns:
 ------------
 
 1. install pip
-2. In git bash: git clone  https://github.com/xionchen/gerrit-cmd.git
+2. Download the project form https://github.com/xionchen/gerrit-cmd
 3. In cmd:
   a. enter the gerrit-cmd path
-  b. run pip install .
-4. edit your configuration file
+  b. run pip "install ."
+4. edit your configuration file under your %HOMEPATH% (usually it's C:/user/username)
+   reference to "Configuration"
 
 **note**:cmd in windows do not support utf-8,so if there may be some messy code,
 pipeline the result to a file is a way to deal with this problem.

@@ -26,9 +26,9 @@ def print_messages(result):
 
     # filters
     # no jenkins
-    messages = filter(lambda x: 'author' in x.keys() and x['author'] != 'jenkins', messages)
+    messages = filter(lambda x: 'author' in x.keys() and x['author'] != 'jenkins' and x['author'] != 'Jenkins', messages)
     # no zuul
-    messages = filter(lambda x: 'author' in x.keys() and x['author'] != 'zuul', messages)
+    messages = filter(lambda x: 'author' in x.keys() and x['author'] != 'zuul' and x['author'] != 'Zuul', messages)
     # no upload patch set
     messages = filter(lambda x: not re.match('Uploaded patch set [0-9]+.', x['message']), messages)
     # no Patch set xxx

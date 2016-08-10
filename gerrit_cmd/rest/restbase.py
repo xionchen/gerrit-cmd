@@ -115,7 +115,7 @@ class GerritRestAPI(Singleton):
         if cf.has_option("grt", "url") and cf.get("grt", "url") != u'':
             cf_url = cf.get("grt", "url")
         else:
-            sys.stderr.write("The url of server hasn't been configured,please configure \"url\" in ~/.grtrc")
+            sys.stderr.write("The url of server hasn't been configured,please configure \"url\" in %s/.grtrc\n Or run 'gerrit_config'" % home)
             exit(0)
 
         if cf.has_option("grt", "username") and cf.has_option("grt", "password"):
