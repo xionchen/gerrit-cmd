@@ -1,7 +1,7 @@
 import gerrit_cmd.rest.restbase as restbase
 import prettytable
 import json
-import  re
+import re
 
 
 endpoint_base = '/changes/'
@@ -24,13 +24,26 @@ def print_messages(result):
         for a in x:
             messages.append(a)
 
-    messages = filter(lambda x: 'author' in x.keys() and x['author']['username'] != 'jenkins', messages)
+    # filters
+    # no jenkins
+    messages = filter(lambda x: 'author' in x.keys() and x['author'] != 'jenkins', messages)
+    # no zuul
+    messages = filter(lambda x: 'author' in x.keys() and x['author'] != 'zuul', messages)
+    # no upload patch set
     messages = filter(lambda x: not re.match('Uploaded patch set [0-9]+.', x['message']), messages)
-    messages = filter(lambda x: not re.match('Patch Set [0-9]+:', x['message']), messages)
-    print_table(messages)
+    # no Patch set xxx
+    messages = filter(lambda x: not re.match('Patch Set [0-9]+:', x['message']) or
+                                len(re.match('Patch Set [0-9]+:', x['message']).string) == len(x['message']), messages)
+    tittle = ['author', 'change_id', 'date', 'message']
+    print_table(messages, tittle)
 
 
 def trans_changes_to_messages(change):
+    """
+
+    :param change: a change
+    :return: a list of messages
+    """
 
     messages = change['messages']
     # id = change['id'] this is redundancy
@@ -39,20 +52,36 @@ def trans_changes_to_messages(change):
     for x in messages:
         # x['id'] = id this is redundancy
         x['change_id'] = change_id
+        if 'author' in x.keys() and 'username' in x['author'].keys():
+            x['author'] = x['author']['username']
+        else:
+            x['author'] = None
+
 
     return messages
 
 
-def print_table(result):
+def print_table(result,title):
+    """
 
-    t = prettytable.PrettyTable(result[0].keys())
+    :param result: what do you want to print
+    :param title: what content do you want to print
+    :return: nothing
+    """
+    if len(result) ==0:
+        print 'got nothing'
+        return
+
+    t = prettytable.PrettyTable(title)
 
     for x in result:
         attrs = []
-        for atr in result[0].keys():
-            attrs.append(x.get(atr))
-        if len(attrs) != 6:
-            continue
+        for atr in title:
+            attr_in_row = x.get(atr)
+            if attr_in_row is None:
+                attr_in_row='Not Found'
+            attrs.append(attr_in_row)
+
         t.add_row(attrs)
     print t
 
