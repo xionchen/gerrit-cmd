@@ -3,7 +3,8 @@ import importlib
 
 # map category to it's category parent
 mapper = {'change': 'changes',
-          'change_edit': 'changes'
+          'change_edit': 'changes',
+          'project': 'project'
 
           }
 
@@ -37,6 +38,7 @@ def main():
     accessparaser(subparsers)
     accountsparaser(subparsers)
     changeparsers(subparsers)
+    projectparaser(subparsers)
 
     parser = rootparser.parse_args()
     run(parser)
@@ -110,14 +112,16 @@ def changeparsers(subparsers):
 
 
 def projectparaser(subparsers):
+
     projectparaser = subparsers.add_parser("project")
 
     project_create_parsers = projectparaser.add_parser("create")
 
     project_create_parsers.add_argument('--name', dest='name', required = True)
-    project_create_parsers.add_argument('--description', dest='description', required = True)
-    project_create_parsers.add_argument('--submit_type', dest='submit_type', required = True)
-    project_create_parsers.add_argument('--owners', dest='owners', nargs='+', required = True)
+    project_create_parsers.add_argument('--description', dest='description')
+    project_create_parsers.add_argument('--submit_type', dest='submit_type')
+    project_create_parsers.add_argument('--owners', dest='owners', nargs='+')
+
 
 def accessparaser(subparsers):
     # do access related paraser here
