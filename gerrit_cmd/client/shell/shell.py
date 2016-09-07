@@ -109,10 +109,19 @@ def changeparsers(subparsers):
     change_message_parsers.add_argument('-n', dest='n', default=25, help='How many changes do you want.Default 25')
 
 
+def projectparaser(subparsers):
+    projectparaser = subparsers.add_parser("project")
+
+    project_create_parsers = projectparaser.add_parser("create")
+
+    project_create_parsers.add_argument('--name', dest='name', required = True)
+    project_create_parsers.add_argument('--description', dest='description', required = True)
+    project_create_parsers.add_argument('--submit_type', dest='submit_type', required = True)
+    project_create_parsers.add_argument('--owners', dest='owners', nargs='+', required = True)
+
 def accessparaser(subparsers):
     # do access related paraser here
     pass
-
 
 def accountsparaser(subparsers):
     # do account related paraser here

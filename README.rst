@@ -27,9 +27,17 @@ On windowns:
 4. edit your configuration file under your %HOMEPATH% (usually it's C:/user/username)
    reference to "Configuration"
 
-**note**:cmd in windows do not support utf-8,so if there may be some messy code,
-pipeline the result to a file is a way to deal with this problem.
+**note**:cmd in windows do not support utf-8,so there may be some messy code, if you
+use Chinese.Pipeline the result to a file is a way to deal with this problem.
+    example:gerrit_cmd change query -p problem_name -s status\
+    -n number--print-message > log.file
 
+Usage examples
+==============
+
+query the message in changes:
+
+    gerrit_cmd change query -p problem_name -s status -n number --print-message
 
 
 Configuration

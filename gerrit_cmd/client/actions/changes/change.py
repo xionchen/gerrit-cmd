@@ -164,6 +164,4 @@ def detail_run(config):
 
     detailstr = config.pop('id') + '/detail'
     result = restbase.GerritRestAPI().get(endpoint_base + detailstr)
-    import pdb
-    pdb.set_trace()
     print_table(result)
