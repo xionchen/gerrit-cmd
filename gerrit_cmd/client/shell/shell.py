@@ -114,8 +114,9 @@ def changeparsers(subparsers):
 def projectparaser(subparsers):
 
     projectparaser = subparsers.add_parser("project")
+    project_sub_parsers = projectparaser.add_subparsers(title="actions", dest="action")
 
-    project_create_parsers = projectparaser.add_parser("create")
+    project_create_parsers = project_sub_parsers.add_parser("create")
 
     project_create_parsers.add_argument('--name', dest='name', required = True)
     project_create_parsers.add_argument('--description', dest='description')
