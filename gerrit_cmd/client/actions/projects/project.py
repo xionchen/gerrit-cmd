@@ -11,13 +11,13 @@ def create_run(config):
     project_name = project_name.replace('/','%2F')
 
     data = {}
-    if config.has_key('parent'):
+    if config.get('parent'):
         data['parent'] = config.pop('parent')
-    if config.has_key('description'):
+    if config.get('description'):
         data['description'] = config.pop('description')
-    if config.has_key('branches'):
+    if config.get('branches'):
         data['branches'] = config.pop('branches')
-    if config.has_key('owners'):
+    if config.get('owners'):
         data['owners'] = config.pop('owners')
 
     sentjson = json.JSONEncoder().encode(data)
@@ -36,16 +36,20 @@ def list_run(config):
     substring = None
     n = None
     list_list = []
-    if config.has_key('substring'):
+    print config
+    if config.get('substring'):
         substring = config.pop('substring')
         substring = urllib.quote(substring)
         substring = substring.replace('/','%2F')
         list_list.append('m=%s' % substring)
-    if config.has_key('n'):
+    if config.get('n'):
         n = config.pop('n')
         list_list.append('n=%s' % n)
     list_str = '&'.join(list_list)
-    list_url_str = endpoint_base + '?' + list_str +'&d'
+    if list_list:
+        list_url_str = endpoint_base + '?' + list_str + '&d'
+    else:
+        list_url_str = endpoint_base + '?d'
     print list_url_str
     result = restbase.GerritRestAPI().get(list_url_str)
 
