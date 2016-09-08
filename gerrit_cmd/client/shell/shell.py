@@ -4,7 +4,7 @@ import importlib
 # map category to it's category parent
 mapper = {'change': 'changes',
           'change_edit': 'changes',
-          'project': 'project'
+          'project': 'projects'
 
           }
 
@@ -35,9 +35,7 @@ def main():
 
 # Add paraser arguments in respective parsers, just like a pipeline. one should just modify the function they care
 # and make sure action in gerrit_cmd.actions are available
-    accessparaser(subparsers)
-    accountsparaser(subparsers)
-    changeparsers(subparsers)
+
     projectparaser(subparsers)
 
     parser = rootparser.parse_args()
@@ -117,11 +115,17 @@ def projectparaser(subparsers):
     project_sub_parsers = projectparaser.add_subparsers(title="actions", dest="action")
 
     project_create_parsers = project_sub_parsers.add_parser("create")
-
     project_create_parsers.add_argument('--name', dest='name', required = True)
     project_create_parsers.add_argument('--description', dest='description')
     project_create_parsers.add_argument('--submit_type', dest='submit_type')
     project_create_parsers.add_argument('--owners', dest='owners', nargs='+')
+
+    project_list_parsers = project_sub_parsers.add_parser("list")
+    project_list_parsers.add_argument('--substring', dest='substring')
+    project_list_parsers.add_argument('-n', dest='n')
+
+    project_list_parsers = project_sub_parsers.add_parser("get")
+    project_list_parsers.add_argument('--name', dest='name')
 
 
 def accessparaser(subparsers):

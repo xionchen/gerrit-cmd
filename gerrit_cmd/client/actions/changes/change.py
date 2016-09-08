@@ -61,29 +61,8 @@ def trans_changes_to_messages(change):
     return messages
 
 
-def print_table(result,title):
-    """
 
-    :param result: what do you want to print
-    :param title: what content do you want to print
-    :return: nothing
-    """
-    if len(result) ==0:
-        print 'got nothing'
-        return
 
-    t = prettytable.PrettyTable(title)
-
-    for x in result:
-        attrs = []
-        for atr in title:
-            attr_in_row = x.get(atr)
-            if attr_in_row is None:
-                attr_in_row='Not Found'
-            attrs.append(attr_in_row)
-
-        t.add_row(attrs)
-    print t
 
 
 def query_run(config):
