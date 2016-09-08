@@ -21,7 +21,7 @@ def create_run(config):
         data['owners'] = config.pop('owners')
 
     sentjson = json.JSONEncoder().encode(data)
-    print 'sent content: %s' % sentjson
+    # print 'sent content: %s' % sentjson
     resutl = restbase.GerritRestAPI().put(endpoint_base+project_name, data = sentjson)
     print_table(resutl, resutl.keys())
 
@@ -36,7 +36,7 @@ def list_run(config):
     substring = None
     n = None
     list_list = []
-    print config
+    # print config
     if config.get('substring'):
         substring = config.pop('substring')
         substring = urllib.quote(substring)
@@ -50,7 +50,7 @@ def list_run(config):
         list_url_str = endpoint_base + '?' + list_str + '&d'
     else:
         list_url_str = endpoint_base + '?d'
-    print list_url_str
+    # print list_url_str
     result = restbase.GerritRestAPI().get(list_url_str)
 
     result_list = transformer_list_result(result)

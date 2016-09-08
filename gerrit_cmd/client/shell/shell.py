@@ -125,7 +125,7 @@ def projectparaser(subparsers):
     project_list_parsers.add_argument('-n', dest='n')
 
     project_list_parsers = project_sub_parsers.add_parser("get")
-    project_list_parsers.add_argument('--name', dest='name')
+    project_list_parsers.add_argument('--name', dest='name', required = True)
 
 
 def accessparaser(subparsers):

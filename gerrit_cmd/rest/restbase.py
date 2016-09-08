@@ -54,7 +54,7 @@ def check_authentication(response):
     if http_error_msg:
         print 'From server:%s' % content
         print http_error_msg
-        exit(0)
+        exit(1)
 
 
 def _decode_response(response):
@@ -77,8 +77,8 @@ def _decode_response(response):
     try:
         return json.loads(content)
     except ValueError:
-        logging.error('Invalid json content: %s' % content)
-        raise
+        logging.error(content)
+        exit(1)
 
 
 class Singleton(object):
